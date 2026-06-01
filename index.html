@@ -3,60 +3,1040 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SPARKZ CULT ACCESS - Accessories Brand</title>
+    <title>SPARKZ CULT ACCESS - Dark Luxury Accessories</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Bebas+Neue&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
+
+        :root {
+            --black: #0B0B0F;
+            --charcoal: #1A1A1F;
+            --red: #B3001B;
+            --green: #39FF14;
+            --gold: #D4AF37;
+            --text-light: #E8E8E8;
+            --text-muted: #A8A8A8;
+        }
+
         body {
-            font-family: 'Arial', sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 100vh;
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--black);
+            color: var(--text-light);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Particle Animation Background */
+        .particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .particle {
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            background: rgba(217, 175, 55, 0.3);
+            border-radius: 50%;
+            animation: float 20s infinite;
+        }
+
+        @keyframes float {
+            0% { transform: translateY(100vh) translateX(0); opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { transform: translateY(-100vh) translateX(100px); opacity: 0; }
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+            background: rgba(11, 11, 15, 0.85);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(217, 175, 55, 0.2);
+            padding: 1rem 2rem;
+        }
+
+        nav .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .logo {
+            font-family: 'Bebas Neue', cursive;
+            font-size: 1.8rem;
+            font-weight: bold;
+            background: linear-gradient(135deg, var(--gold), var(--red));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            letter-spacing: 2px;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        nav a {
+            color: var(--text-light);
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        nav a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(90deg, var(--green), var(--red));
+            transition: width 0.3s ease;
+        }
+
+        nav a:hover::after {
+            width: 100%;
+        }
+
+        .cart-icon, .wishlist-icon {
+            position: relative;
+            cursor: pointer;
+            font-size: 1.3rem;
+            color: var(--gold);
+            transition: all 0.3s ease;
+        }
+
+        .cart-icon:hover, .wishlist-icon:hover {
+            color: var(--green);
+            transform: scale(1.2);
+        }
+
+        .cart-count {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background: var(--red);
+            color: white;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.75rem;
+            font-weight: bold;
+        }
+
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+        }
+
+        .hamburger span {
+            width: 25px;
+            height: 3px;
+            background: var(--gold);
+            margin: 5px 0;
+            transition: all 0.3s ease;
+        }
+
+        /* Hero Section */
+        .hero {
+            margin-top: 80px;
+            min-height: 90vh;
+            background: linear-gradient(135deg, rgba(11, 11, 15, 0.9) 0%, rgba(26, 26, 31, 0.9) 100%);
+            position: relative;
+            overflow: hidden;
             display: flex;
             align-items: center;
             justify-content: center;
         }
-        .container {
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at 20% 50%, rgba(179, 0, 27, 0.1) 0%, transparent 50%),
+                        radial-gradient(circle at 80% 80%, rgba(57, 255, 20, 0.05) 0%, transparent 50%);
+            z-index: 2;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 3;
             text-align: center;
-            color: white;
-            padding: 40px;
-            max-width: 600px;
+            max-width: 800px;
+            padding: 2rem;
         }
-        h1 {
-            font-size: 3em;
-            margin-bottom: 20px;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+
+        .hero h1 {
+            font-family: 'Bebas Neue', cursive;
+            font-size: clamp(2.5rem, 8vw, 5rem);
+            font-weight: 900;
+            letter-spacing: 3px;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, var(--gold) 0%, var(--red) 50%, var(--green) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-shadow: 0 0 30px rgba(217, 175, 55, 0.3);
         }
-        p {
-            font-size: 1.2em;
-            margin-bottom: 30px;
-            opacity: 0.9;
+
+        .tagline {
+            font-family: 'Orbitron', sans-serif;
+            font-size: clamp(1.2rem, 3vw, 1.8rem);
+            color: var(--green);
+            margin-bottom: 2rem;
+            font-weight: 300;
+            letter-spacing: 2px;
+            text-shadow: 0 0 20px rgba(57, 255, 20, 0.3);
         }
-        .button {
-            display: inline-block;
-            padding: 12px 30px;
-            background-color: white;
-            color: #667eea;
+
+        .hero-buttons {
+            display: flex;
+            gap: 1.5rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-bottom: 2rem;
+        }
+
+        .btn {
+            padding: 12px 35px;
+            font-family: 'Poppins', sans-serif;
+            font-weight: 600;
+            border: none;
+            cursor: pointer;
             text-decoration: none;
-            border-radius: 5px;
-            font-weight: bold;
+            border-radius: 50px;
             transition: all 0.3s ease;
-            margin: 10px;
+            font-size: 1rem;
+            letter-spacing: 1px;
+            text-transform: uppercase;
         }
-        .button:hover {
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--red), var(--gold));
+            color: white;
+            box-shadow: 0 0 20px rgba(179, 0, 27, 0.4);
+        }
+
+        .btn-primary:hover {
             transform: translateY(-3px);
-            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+            box-shadow: 0 0 30px rgba(179, 0, 27, 0.6);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--green);
+            border: 2px solid var(--green);
+            box-shadow: inset 0 0 20px rgba(57, 255, 20, 0.1);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(57, 255, 20, 0.1);
+            box-shadow: 0 0 20px rgba(57, 255, 20, 0.4);
+            transform: translateY(-3px);
+        }
+
+        .scroll-indicator {
+            position: absolute;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 3;
+            animation: bounce 2s infinite;
+        }
+
+        .scroll-indicator i {
+            color: var(--gold);
+            font-size: 1.5rem;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateX(-50%) translateY(0); }
+            50% { transform: translateX(-50%) translateY(10px); }
+        }
+
+        /* Featured Products Section */
+        .featured-section {
+            padding: 6rem 2rem;
+            background: linear-gradient(180deg, var(--charcoal) 0%, var(--black) 100%);
+            position: relative;
+        }
+
+        .section-title {
+            font-family: 'Bebas Neue', cursive;
+            font-size: clamp(2rem, 5vw, 3.5rem);
+            text-align: center;
+            margin-bottom: 3rem;
+            letter-spacing: 2px;
+            background: linear-gradient(135deg, var(--gold), var(--red));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .product-card {
+            background: linear-gradient(135deg, var(--charcoal), var(--black));
+            border: 1px solid rgba(217, 175, 55, 0.2);
+            border-radius: 10px;
+            overflow: hidden;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            group: 'card';
+        }
+
+        .product-card:hover {
+            border-color: var(--green);
+            box-shadow: 0 0 30px rgba(57, 255, 20, 0.3), inset 0 0 20px rgba(57, 255, 20, 0.05);
+            transform: translateY(-10px);
+        }
+
+        .product-image {
+            width: 100%;
+            height: 250px;
+            background: linear-gradient(135deg, rgba(179, 0, 27, 0.1), rgba(57, 255, 20, 0.05));
+            overflow: hidden;
+            position: relative;
+        }
+
+        .product-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+
+        .product-card:hover .product-image img {
+            transform: scale(1.1);
+        }
+
+        .product-badge {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: var(--red);
+            color: white;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .product-badge.trending {
+            background: var(--green);
+            color: var(--black);
+        }
+
+        .product-badge.limited {
+            background: var(--gold);
+            color: var(--black);
+        }
+
+        .product-info {
+            padding: 1.5rem;
+        }
+
+        .product-name {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--text-light);
+        }
+
+        .product-price {
+            font-size: 1.3rem;
+            color: var(--gold);
+            font-weight: bold;
+            margin-bottom: 1rem;
+        }
+
+        .product-actions {
+            display: flex;
+            gap: 0.5rem;
+            opacity: 0;
+            transform: translateY(10px);
+            transition: all 0.3s ease;
+        }
+
+        .product-card:hover .product-actions {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .btn-quick-buy {
+            flex: 1;
+            padding: 8px 12px;
+            background: var(--red);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            font-size: 0.9rem;
+        }
+
+        .btn-quick-buy:hover {
+            background: var(--green);
+            color: var(--black);
+            box-shadow: 0 0 15px rgba(57, 255, 20, 0.4);
+        }
+
+        .wishlist-btn {
+            padding: 8px 12px;
+            background: transparent;
+            border: 1px solid var(--gold);
+            color: var(--gold);
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 1rem;
+        }
+
+        .wishlist-btn:hover {
+            background: var(--gold);
+            color: var(--black);
+        }
+
+        /* Newsletter Section */
+        .newsletter {
+            padding: 4rem 2rem;
+            background: linear-gradient(135deg, rgba(179, 0, 27, 0.1) 0%, rgba(57, 255, 20, 0.05) 100%);
+            border: 1px solid rgba(217, 175, 55, 0.2);
+            border-radius: 10px;
+            text-align: center;
+            max-width: 600px;
+            margin: 4rem auto;
+        }
+
+        .newsletter h3 {
+            font-family: 'Bebas Neue', cursive;
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            color: var(--green);
+        }
+
+        .newsletter p {
+            color: var(--text-muted);
+            margin-bottom: 1.5rem;
+        }
+
+        .newsletter-form {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .newsletter-form input {
+            flex: 1;
+            padding: 12px 15px;
+            background: rgba(26, 26, 31, 0.8);
+            border: 1px solid rgba(217, 175, 55, 0.3);
+            border-radius: 5px;
+            color: var(--text-light);
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .newsletter-form input::placeholder {
+            color: var(--text-muted);
+        }
+
+        .newsletter-form button {
+            padding: 12px 25px;
+            background: var(--red);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .newsletter-form button:hover {
+            background: var(--gold);
+            color: var(--black);
+        }
+
+        /* Footer */
+        footer {
+            background: var(--charcoal);
+            border-top: 1px solid rgba(217, 175, 55, 0.2);
+            padding: 3rem 2rem 1rem;
+        }
+
+        .footer-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-section h4 {
+            font-family: 'Bebas Neue', cursive;
+            color: var(--gold);
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+        }
+
+        .footer-section ul {
+            list-style: none;
+        }
+
+        .footer-section ul li {
+            margin-bottom: 0.5rem;
+        }
+
+        .footer-section a {
+            color: var(--text-muted);
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .footer-section a:hover {
+            color: var(--green);
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .social-links a {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background: rgba(217, 175, 55, 0.1);
+            border-radius: 50%;
+            color: var(--gold);
+            font-size: 1.2rem;
+            transition: all 0.3s ease;
+        }
+
+        .social-links a:hover {
+            background: var(--gold);
+            color: var(--black);
+            transform: translateY(-3px);
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(217, 175, 55, 0.1);
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 2000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .modal-content {
+            background: var(--charcoal);
+            border: 1px solid rgba(217, 175, 55, 0.3);
+            border-radius: 10px;
+            max-width: 600px;
+            width: 90%;
+            margin: 50px auto;
+            padding: 2rem;
+            position: relative;
+            animation: slideIn 0.3s ease;
+        }
+
+        @keyframes slideIn {
+            from { transform: translateY(-50px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            font-size: 2rem;
+            cursor: pointer;
+            color: var(--gold);
+            transition: all 0.3s ease;
+        }
+
+        .modal-close:hover {
+            color: var(--red);
+            transform: rotate(90deg);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            nav ul {
+                display: none;
+                position: absolute;
+                top: 70px;
+                right: 0;
+                flex-direction: column;
+                background: var(--black);
+                width: 100%;
+                padding: 2rem;
+                gap: 1rem;
+            }
+
+            nav ul.active {
+                display: flex;
+            }
+
+            .hamburger {
+                display: flex;
+            }
+
+            .hero {
+                margin-top: 60px;
+                min-height: 70vh;
+            }
+
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .tagline {
+                font-size: 1rem;
+            }
+
+            .hero-buttons {
+                flex-direction: column;
+            }
+
+            .btn {
+                width: 100%;
+            }
+
+            .products-grid {
+                grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+                gap: 1.5rem;
+            }
+
+            .product-image {
+                height: 200px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            nav {
+                padding: 1rem;
+            }
+
+            .logo {
+                font-size: 1.3rem;
+            }
+
+            .hero h1 {
+                font-size: 1.5rem;
+                letter-spacing: 1px;
+            }
+
+            .tagline {
+                font-size: 0.9rem;
+            }
+
+            .products-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .section-title {
+                font-size: 1.8rem;
+            }
+
+            .footer-content {
+                grid-template-columns: 1fr;
+            }
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <h1>✨ SPARKZ CULT ACCESS ✨</h1>
-        <p>Premium Accessories Brand</p>
-        <p>Coming Soon</p>
-        <a href="https://github.com/aiworkflow287-dotcom/SPARKZ-CULT-ACCESS" class="button">Visit Repository</a>
+    <!-- Particle Background -->
+    <div class="particles" id="particles"></div>
+
+    <!-- Navigation -->
+    <nav>
+        <div class="container">
+            <div class="logo">⚡ SPARKZ</div>
+            <ul id="navMenu">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#shop">Shop</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+            <div style="display: flex; gap: 1.5rem; align-items: center;">
+                <div class="wishlist-icon" title="Wishlist">
+                    <i class="far fa-heart"></i>
+                </div>
+                <div class="cart-icon" id="cartIcon" title="Shopping Cart">
+                    <i class="fas fa-shopping-bag"></i>
+                    <span class="cart-count" id="cartCount">0</span>
+                </div>
+                <div class="hamburger" id="hamburger">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <h1>SPARKZ CULT ACCESS</h1>
+            <p class="tagline">Wear the Darkness. Own the Aura.</p>
+            <div class="hero-buttons">
+                <button class="btn btn-primary" onclick="scrollTo('#shop')">Shop Now</button>
+                <button class="btn btn-secondary" onclick="scrollTo('#featured')">Explore Collection</button>
+            </div>
+        </div>
+        <div class="scroll-indicator">
+            <i class="fas fa-chevron-down"></i>
+        </div>
+    </section>
+
+    <!-- Featured Products -->
+    <section class="featured-section" id="featured">
+        <h2 class="section-title">✨ Featured Collection ✨</h2>
+        <div class="products-grid" id="productsGrid">
+            <!-- Products will be generated here -->
+        </div>
+        
+        <!-- Newsletter -->
+        <div class="newsletter">
+            <h3>Join the Aura</h3>
+            <p>Subscribe for exclusive drops and dark aesthetics</p>
+            <form class="newsletter-form" onsubmit="handleNewsletter(event)">
+                <input type="email" placeholder="Enter your darkness..." required>
+                <button type="submit">Subscribe</button>
+            </form>
+        </div>
+    </section>
+
+    <!-- Shop Section -->
+    <section id="shop" style="padding: 4rem 2rem; background: var(--black);">
+        <h2 class="section-title">🛍️ Complete Collection</h2>
+        <div class="products-grid" id="shopGrid">
+            <!-- Shop products will be generated here -->
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h4>About SPARKZ</h4>
+                <p>Dark luxury accessories for the cultured individual. Own your aura.</p>
+                <div class="social-links">
+                    <a href="#" title="Instagram"><i class="fab fa-instagram"></i></a>
+                    <a href="#" title="TikTok"><i class="fab fa-tiktok"></i></a>
+                    <a href="#" title="Twitter"><i class="fab fa-twitter"></i></a>
+                    <a href="#" title="Discord"><i class="fab fa-discord"></i></a>
+                </div>
+            </div>
+            <div class="footer-section">
+                <h4>Shop</h4>
+                <ul>
+                    <li><a href="#shop">New Arrivals</a></li>
+                    <li><a href="#shop">Trending</a></li>
+                    <li><a href="#shop">Limited Edition</a></li>
+                    <li><a href="#shop">Best Sellers</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>Support</h4>
+                <ul>
+                    <li><a href="#contact">Contact Us</a></li>
+                    <li><a href="#">Shipping Info</a></li>
+                    <li><a href="#">Returns</a></li>
+                    <li><a href="#">FAQ</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>Legal</h4>
+                <ul>
+                    <li><a href="#">Privacy Policy</a></li>
+                    <li><a href="#">Terms of Service</a></li>
+                    <li><a href="#">Cookies</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 SPARKZ CULT ACCESS. All rights reserved. | Embrace the Darkness.</p>
+        </div>
+    </footer>
+
+    <!-- Quick View Modal -->
+    <div id="quickViewModal" class="modal">
+        <div class="modal-content">
+            <span class="modal-close" onclick="closeModal()">&times;</span>
+            <div id="modalBody">
+                <!-- Modal content will be generated here -->
+            </div>
+        </div>
     </div>
+
+    <script>
+        // Products Database
+        const products = [
+            {
+                id: 1,
+                name: 'Green Snake Chain',
+                price: '$49.99',
+                image: 'https://i.ibb.co/v4MfzbMx/green-snake.webp',
+                badge: 'Trending',
+                badgeType: 'trending',
+                description: 'Hypnotic emerald serpent chain with mystical energy'
+            },
+            {
+                id: 2,
+                name: 'Blood Heart Pendant',
+                price: '$59.99',
+                image: 'https://i.ibb.co/B2H4WyfM/blood-heart.webp',
+                badge: 'New',
+                badgeType: 'new',
+                description: 'Crimson heart pendant pulsing with dark romance'
+            },
+            {
+                id: 3,
+                name: 'Dragon Chain',
+                price: '$89.99',
+                image: 'https://i.ibb.co/RTCz0zB1/dragon-chain.webp',
+                badge: 'Limited',
+                badgeType: 'limited',
+                description: 'Ancient dragon-forged chain of power'
+            },
+            {
+                id: 4,
+                name: 'Gold Sun Pendant',
+                price: '$79.99',
+                image: 'https://i.ibb.co/dwjWxXHZ/GOLD-SUN.webp',
+                badge: 'Trending',
+                badgeType: 'trending',
+                description: 'Golden celestial sun pendant radiating luxury'
+            },
+            {
+                id: 5,
+                name: 'Heart Sword Pendant',
+                price: '$69.99',
+                image: 'https://i.ibb.co/S4MrTD5Z/sword.webp',
+                badge: 'New',
+                badgeType: 'new',
+                description: 'Piercing heart-sword blend of love and battle'
+            },
+            {
+                id: 6,
+                name: 'Devil Pendant',
+                price: '$64.99',
+                image: 'https://i.ibb.co/Wp58PbBc/devil-bg.png',
+                badge: 'Limited',
+                badgeType: 'limited',
+                description: 'Devilish charm for the bold and daring'
+            },
+            {
+                id: 7,
+                name: 'Spider Pendant',
+                price: '$54.99',
+                image: 'https://i.ibb.co/p6QVdfyR/spider.webp',
+                badge: 'Trending',
+                badgeType: 'trending',
+                description: 'Intricate spider web pendant of mystery'
+            }
+        ];
+
+        let cart = [];
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            renderProducts('productsGrid', products);
+            renderProducts('shopGrid', products);
+            setupParticles();
+            setupMobileMenu();
+        });
+
+        // Render Products
+        function renderProducts(gridId, productsList) {
+            const grid = document.getElementById(gridId);
+            grid.innerHTML = productsList.map(product => `
+                <div class="product-card">
+                    <div class="product-image">
+                        <img src="${product.image}" alt="${product.name}" loading="lazy">
+                        <span class="product-badge ${product.badgeType}">${product.badge}</span>
+                    </div>
+                    <div class="product-info">
+                        <div class="product-name">${product.name}</div>
+                        <div class="product-price">${product.price}</div>
+                        <div class="product-actions">
+                            <button class="btn-quick-buy" onclick="addToCart(${product.id}, '${product.name}', '${product.price}')">Add to Cart</button>
+                            <button class="wishlist-btn" onclick="addToWishlist(${product.id})"><i class="far fa-heart"></i></button>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Add to Cart
+        function addToCart(id, name, price) {
+            const existingItem = cart.find(item => item.id === id);
+            if (existingItem) {
+                existingItem.qty++;
+            } else {
+                cart.push({ id, name, price, qty: 1 });
+            }
+            updateCartCount();
+            showCartAnimation();
+        }
+
+        // Update Cart Count
+        function updateCartCount() {
+            const count = cart.reduce((sum, item) => sum + item.qty, 0);
+            document.getElementById('cartCount').textContent = count;
+        }
+
+        // Cart Animation
+        function showCartAnimation() {
+            const cartIcon = document.getElementById('cartIcon');
+            cartIcon.style.animation = 'none';
+            setTimeout(() => {
+                cartIcon.style.animation = 'scale 0.5s ease';
+            }, 10);
+        }
+
+        // Add to Wishlist
+        function addToWishlist(id) {
+            alert('Added to Wishlist! 💚');
+        }
+
+        // Quick View Modal
+        function openQuickView(productId) {
+            const product = products.find(p => p.id === productId);
+            const modal = document.getElementById('quickViewModal');
+            const modalBody = document.getElementById('modalBody');
+            
+            modalBody.innerHTML = `
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem;">
+                    <img src="${product.image}" alt="${product.name}" style="width: 100%; border-radius: 10px;">
+                    <div>
+                        <h2 style="color: var(--gold); margin-bottom: 1rem;">${product.name}</h2>
+                        <p style="color: var(--text-muted); margin-bottom: 1rem;">${product.description}</p>
+                        <div style="font-size: 2rem; color: var(--gold); margin-bottom: 1rem;">${product.price}</div>
+                        <button class="btn btn-primary" onclick="addToCart(${product.id}, '${product.name}', '${product.price}'); closeModal();" style="width: 100%;">Add to Cart</button>
+                    </div>
+                </div>
+            `;
+            modal.style.display = 'block';
+        }
+
+        function closeModal() {
+            document.getElementById('quickViewModal').style.display = 'none';
+        }
+
+        // Newsletter
+        function handleNewsletter(e) {
+            e.preventDefault();
+            alert('Welcome to the Aura! Check your email for exclusive drops. 📧');
+            e.target.reset();
+        }
+
+        // Scroll to Section
+        function scrollTo(selector) {
+            const element = document.querySelector(selector);
+            element.scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // Particles
+        function setupParticles() {
+            const container = document.getElementById('particles');
+            for (let i = 0; i < 50; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                particle.style.left = Math.random() * 100 + '%';
+                particle.style.top = Math.random() * 100 + '%';
+                particle.style.animationDelay = Math.random() * 20 + 's';
+                particle.style.animationDuration = (Math.random() * 10 + 20) + 's';
+                container.appendChild(particle);
+            }
+        }
+
+        // Mobile Menu
+        function setupMobileMenu() {
+            const hamburger = document.getElementById('hamburger');
+            const navMenu = document.getElementById('navMenu');
+            
+            hamburger.addEventListener('click', () => {
+                navMenu.classList.toggle('active');
+            });
+
+            navMenu.addEventListener('click', () => {
+                navMenu.classList.remove('active');
+            });
+        }
+
+        // Add scale animation
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes scale {
+                0%, 100% { transform: scale(1); }
+                50% { transform: scale(1.2); }
+            }
+        `;
+        document.head.appendChild(style);
+    </script>
 </body>
 </html>
