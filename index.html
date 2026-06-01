@@ -939,6 +939,30 @@
             color: var(--text-light);
         }
 
+        .btn-upi {
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(135deg, #0066CC, #00D4FF);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-weight: 700;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-bottom: 1rem;
+            box-shadow: 0 0 20px rgba(0, 102, 204, 0.3);
+        }
+
+        .btn-upi:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 0 30px rgba(0, 102, 204, 0.5);
+        }
+
+        .btn-upi i {
+            margin-right: 0.5rem;
+        }
+
         /* Add to Cart Animation */
         @keyframes addToCartPop {
             0% {
@@ -1288,7 +1312,7 @@
             <div id="checkoutSuccess" class="success-message">
                 <h2>✅ Order Placed Successfully!</h2>
                 <p>Welcome to the Aura. We will confirm your order within 24 hours.</p>
-                <button class="btn btn-primary" onclick="closeCheckout()" style="margin-top: 1rem;">Back to Shop</button>
+                <button class="btn btn-primary" onclick="completeCheckout()" style="margin-top: 1rem;">Back to Shop</button>
             </div>
 
             <form id="checkoutForm" onsubmit="submitCheckout(event)" style="display: none;">
@@ -1344,20 +1368,28 @@
                 </div>
 
                 <div class="payment-section">
-                    <h3 style="color: var(--gold); margin-bottom: 1rem;">Payment Method</h3>
+                    <h3 style="color: var(--green); margin-bottom: 1rem; font-weight: 700;">💳 Direct UPI Payment</h3>
                     
-                    <div class="payment-option">
-                        <h3>💳 Google Pay / UPI</h3>
-                        <p>Scan or send payment to:</p>
-                        <div class="upi-id">rohitkamble2206@oksbi</div>
-                        <div class="form-group full">
-                            <label>Transaction ID / Reference</label>
-                            <input type="text" name="transaction_id" placeholder="Enter transaction ID after payment" required>
-                        </div>
+                    <button type="button" id="upiPayBtn" class="btn-upi" onclick="initiateUPIPayment(event)">
+                        <i class="fas fa-mobile-alt"></i>Pay ₹<span id="upiAmount">0</span> via UPI/Google Pay
+                    </button>
+
+                    <p style="color: var(--text-muted); font-size: 0.85rem; text-align: center; margin-bottom: 1rem;">
+                        Click above to open Google Pay, PhonePe, or any UPI app
+                    </p>
+
+                    <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 0.5rem;">
+                        <strong>UPI ID:</strong>
+                    </p>
+                    <div class="upi-id">rohitkamble2206@oksbi</div>
+
+                    <div class="form-group full">
+                        <label>📱 Transaction ID / UPI Reference (After Payment)</label>
+                        <input type="text" name="transaction_id" placeholder="Paste transaction ID here after payment" required>
                     </div>
                 </div>
 
-                <button type="submit" class="btn btn-primary" style="width: 100%; padding: 1rem; font-size: 1rem; margin-top: 1rem;">Place Order</button>
+                <button type="submit" class="btn btn-primary" style="width: 100%; padding: 1rem; font-size: 1rem; margin-top: 1rem;">Complete Order</button>
             </form>
         </div>
     </div>
@@ -1408,6 +1440,10 @@
     </footer>
 
     <script>
+        // UPI Configuration
+        const UPI_ID = "rohitkamble2206@oksbi";
+        const MERCHANT_NAME = "SPARKZ CULT ACCESS";
+
         // Products Database
         const products = [
             {
@@ -1476,6 +1512,7 @@
         ];
 
         let cart = [];
+        let orderData = {};
 
         // Initialize
         document.addEventListener('DOMContentLoaded', function() {
@@ -1635,6 +1672,26 @@
             const subtotal = cart.reduce((sum, item) => sum + (item.price * item.qty), 0);
             document.getElementById('checkoutSubtotal').textContent = '₹' + subtotal;
             document.getElementById('checkoutTotal').textContent = '₹' + subtotal;
+            document.getElementById('upiAmount').textContent = subtotal;
+
+            // Store total for UPI payment
+            localStorage.setItem('cartTotal', subtotal);
+        }
+
+        // Initiate UPI Payment
+        function initiateUPIPayment(event) {
+            event.preventDefault();
+            
+            const totalAmount = cart.reduce((sum, item) => sum + (item.price * item.qty), 0);
+            const upiLink = `upi://pay?pa=${UPI_ID}&pn=${encodeURIComponent(MERCHANT_NAME)}&am=${totalAmount}&cu=INR`;
+            
+            console.log('UPI Link:', upiLink);
+            
+            // Redirect to UPI payment
+            window.location.href = upiLink;
+
+            // Show alert with instructions
+            alert(`Opening UPI payment for ₹${totalAmount}\n\nAfter payment:\n1. Copy the Transaction ID\n2. Return to this page\n3. Paste the Transaction ID in the form\n4. Click "Complete Order"`);
         }
 
         // Submit Checkout
@@ -1647,31 +1704,19 @@
             const total = cart.reduce((sum, item) => sum + (item.price * item.qty), 0);
             const cartItems = cart.map(item => `${item.name} × ${item.qty} = ₹${item.price * item.qty}`).join('\n');
             
-            const emailContent = `
-New Order Received!
-
-=== CUSTOMER DETAILS ===
-Name: ${formData.get('name')}
-Email: ${formData.get('email')}
-Phone: ${formData.get('phone')}
-
-=== DELIVERY ADDRESS ===
-Address: ${formData.get('address')}
-City: ${formData.get('city')}
-Pincode: ${formData.get('pincode')}
-
-=== ORDER ITEMS ===
-${cartItems}
-
-Order Notes: ${formData.get('notes') || 'None'}
-
-=== PAYMENT ===
-Transaction ID: ${formData.get('transaction_id')}
-
-Total Amount: ₹${total}
-
-Please confirm this order within 24 hours.
-            `;
+            // Store order data
+            orderData = {
+                name: formData.get('name'),
+                email: formData.get('email'),
+                phone: formData.get('phone'),
+                address: formData.get('address'),
+                city: formData.get('city'),
+                pincode: formData.get('pincode'),
+                notes: formData.get('notes'),
+                transactionId: formData.get('transaction_id'),
+                items: cartItems,
+                total: total
+            };
 
             // Submit via Formspree
             const formspreeForm = document.createElement('form');
@@ -1705,13 +1750,18 @@ Please confirm this order within 24 hours.
             document.getElementById('checkoutForm').style.display = 'none';
             document.getElementById('checkoutSuccess').style.display = 'block';
             
-            // Clear cart after 2 seconds
+            // Submit form and clear cart
             setTimeout(() => {
                 formspreeForm.submit();
                 cart = [];
                 updateCart();
                 toggleCart();
             }, 2000);
+        }
+
+        // Complete Checkout
+        function completeCheckout() {
+            closeCheckout();
         }
 
         // Add to Wishlist
