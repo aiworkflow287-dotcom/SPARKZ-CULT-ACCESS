@@ -925,7 +925,7 @@
             background: rgba(57, 255, 20, 0.1);
             border: 1px solid var(--green);
             border-radius: 8px;
-            padding: 1.5rem;
+            padding: 2rem;
             text-align: center;
             animation: slideIn 0.3s ease;
         }
@@ -933,10 +933,25 @@
         .success-message h2 {
             color: var(--green);
             margin-bottom: 0.5rem;
+            font-size: 2rem;
         }
 
         .success-message p {
             color: var(--text-light);
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+        }
+
+        .success-icon {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            animation: popIn 0.5s ease;
+        }
+
+        @keyframes popIn {
+            0% { transform: scale(0); }
+            50% { transform: scale(1.2); }
+            100% { transform: scale(1); }
         }
 
         .btn-upi {
@@ -1310,8 +1325,10 @@
             <h2 style="color: var(--gold); margin-bottom: 1.5rem; font-family: 'Bebas Neue';">Checkout</h2>
             
             <div id="checkoutSuccess" class="success-message">
-                <h2>✅ Order Placed Successfully!</h2>
-                <p>Welcome to the Aura. We will confirm your order within 24 hours.</p>
+                <div class="success-icon">✅</div>
+                <h2>Payment Successful!</h2>
+                <p>Your order has been confirmed and payment received.</p>
+                <p style="font-size: 0.95rem; color: var(--text-muted); margin-top: 1rem;">We will prepare your order and ship it soon. Check your email for updates.</p>
                 <button class="btn btn-primary" onclick="completeCheckout()" style="margin-top: 1rem;">Back to Shop</button>
             </div>
 
@@ -1374,22 +1391,17 @@
                         <i class="fas fa-mobile-alt"></i>Pay ₹<span id="upiAmount">0</span> via UPI/Google Pay
                     </button>
 
-                    <p style="color: var(--text-muted); font-size: 0.85rem; text-align: center; margin-bottom: 1rem;">
+                    <p style="color: var(--text-muted); font-size: 0.85rem; text-align: center;">
                         Click above to open Google Pay, PhonePe, or any UPI app
                     </p>
 
-                    <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 0.5rem;">
+                    <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 0.5rem; margin-top: 1rem;">
                         <strong>UPI ID:</strong>
                     </p>
                     <div class="upi-id">rohitkamble2206@oksbi</div>
-
-                    <div class="form-group full">
-                        <label>📱 Transaction ID / UPI Reference (After Payment)</label>
-                        <input type="text" name="transaction_id" placeholder="Paste transaction ID here after payment" required>
-                    </div>
                 </div>
 
-                <button type="submit" class="btn btn-primary" style="width: 100%; padding: 1rem; font-size: 1rem; margin-top: 1rem;">Complete Order</button>
+                <button type="submit" class="btn btn-primary" style="width: 100%; padding: 1rem; font-size: 1rem; margin-top: 1rem;">Confirm Payment</button>
             </form>
         </div>
     </div>
@@ -1513,6 +1525,7 @@
 
         let cart = [];
         let orderData = {};
+        let paymentConfirmed = false;
 
         // Initialize
         document.addEventListener('DOMContentLoaded', function() {
@@ -1648,6 +1661,7 @@
                 alert('Your cart is empty!');
                 return;
             }
+            paymentConfirmed = false;
             renderCheckoutSummary();
             document.getElementById('checkoutModal').style.display = 'block';
             document.getElementById('checkoutForm').style.display = 'block';
@@ -1687,16 +1701,22 @@
             
             console.log('UPI Link:', upiLink);
             
+            // Mark payment as confirmed
+            paymentConfirmed = true;
+            
             // Redirect to UPI payment
             window.location.href = upiLink;
-
-            // Show alert with instructions
-            alert(`Opening UPI payment for ₹${totalAmount}\n\nAfter payment:\n1. Copy the Transaction ID\n2. Return to this page\n3. Paste the Transaction ID in the form\n4. Click "Complete Order"`);
         }
 
         // Submit Checkout
         function submitCheckout(event) {
             event.preventDefault();
+            
+            if (!paymentConfirmed) {
+                alert('Please complete UPI payment first!');
+                return;
+            }
+            
             const form = event.target;
             const formData = new FormData(form);
             
@@ -1713,9 +1733,9 @@
                 city: formData.get('city'),
                 pincode: formData.get('pincode'),
                 notes: formData.get('notes'),
-                transactionId: formData.get('transaction_id'),
                 items: cartItems,
-                total: total
+                total: total,
+                paymentStatus: 'PAID'
             };
 
             // Submit via Formspree
@@ -1723,7 +1743,7 @@
             formspreeForm.method = 'POST';
             formspreeForm.action = 'https://formspree.io/f/xpqnbqvo';
             
-            const fields = ['name', 'email', 'phone', 'address', 'city', 'pincode', 'notes', 'transaction_id'];
+            const fields = ['name', 'email', 'phone', 'address', 'city', 'pincode', 'notes'];
             fields.forEach(field => {
                 const input = document.createElement('input');
                 input.type = 'hidden';
@@ -1744,6 +1764,12 @@
             totalInput.value = total;
             formspreeForm.appendChild(totalInput);
 
+            const statusInput = document.createElement('input');
+            statusInput.type = 'hidden';
+            statusInput.name = 'payment_status';
+            statusInput.value = 'PAID ✅';
+            formspreeForm.appendChild(statusInput);
+
             document.body.appendChild(formspreeForm);
             
             // Show success message
@@ -1755,6 +1781,7 @@
                 formspreeForm.submit();
                 cart = [];
                 updateCart();
+                paymentConfirmed = false;
                 toggleCart();
             }, 2000);
         }
